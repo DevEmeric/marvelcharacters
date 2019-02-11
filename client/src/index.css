@@ -42,4 +42,36 @@ code {
   margin: 5vh 5vw;
 }
 
+.cardClass {
+  margin: 1vh 1vw;
+  box-shadow: 0px 5px 10px black;
+}
 
+.cardClass:hover {
+  transition: all 200ms ease-in-out;
+  transform: scale(1.1, 1.1);
+  box-shadow: 0px 0px 10px transparent;
+  z-index: 2;
+}
+
+.cardImage {
+  object-fit: cover;
+  height: 10em;
+}
+
+.cardClass Button {
+  min-width: 9vw;
+  max-height: 3vh;
+  font-size: 0.8em;
+  background-color: rgb(8, 65, 92);
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+.imageModal img {
+  max-width: 30em;
+}
+
+li {
+  list-style-type: none;
+}
