@@ -8,7 +8,7 @@ const hashPass = '5e7e2a348a47510cee643bf096d44061';
 
 /* GET List */
 router.get('/', (req, res, next) => {
-  axios.get(`https://gateway.marvel.com/v1/public/characters?offset=100&ts=${timeStamp}&apikey=${apiKey}&hash=${hashPass}`)
+  axios.get(`https://gateway.marvel.com/v1/public/characters?limit=100&offset=100&ts=${timeStamp}&apikey=${apiKey}&hash=${hashPass}`)
     .then(results => res.send(results.data.data))
 });
 

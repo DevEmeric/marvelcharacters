@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CardsInfo from '../containers/CardsInfo';
+import CardsInfo from './CardsInfo';
 import {
   Card, CardImg, CardBody,
   CardTitle, Button
@@ -42,7 +42,7 @@ class Cards extends Component {
 
 
 Cards.propTypes = {
-  characters: PropTypes.object,
+  characters: PropTypes.array,
 }
 
 export default Cards;
