@@ -1,37 +1,63 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Row, Col } from 'reactstrap';
-import Cards from '../components/Cards';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import axios from "axios";
+import { Row, Col } from "reactstrap";
+import Cards from "./Cards";
+import { fetchingInitial } from "../actions/actions";
+import PropTypes from 'prop-types';
 
 class List extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      characters: []
-    }
+    this.state = {}
   }
 
   componentDidMount() {
-    axios.get('api')
-      .then((res) => {
-        const fetchedList = [res.data.results];
-        this.setState({ characters: fetchedList[0] })
-      })
-      .catch(err => console.log(err))
+    this.fetchChar();
   }
 
+  async fetchChar() {
+    const { fetching } = this.props;
+    let res = await axios.get("api");
+    let fetchedList = [res.data.results];
+    fetching(fetchedList);
+  };
 
-  render() {
-    const { characters } = this.state;
+  displayCardsResults(arrayOrigin) {
+    const { twentyChar } = this.props;
+    const currentTwenty = arrayOrigin.slice(twentyChar.indexA, twentyChar.indexB);
     return (
       <Row className="fullList">
-        {characters.map(item =>
+        {currentTwenty.map(item => (
           <Col xs="3" md="3" key={item.id}>
             <Cards characters={item} />
-          </Col>)}
+          </Col>
+        ))}
       </Row>
     );
+  };
+
+  render() {
+    const { arrayOrigin } = this.props;
+    return <div>{this.displayCardsResults(arrayOrigin)}</div>;
   }
 }
 
-export default List;
+const mapDispatchToProps = dispatch => ({
+  fetching: array => dispatch(fetchingInitial(array))
+});
+
+const mapStateToProps = state => ({
+  twentyChar: state.pagination,
+  arrayOrigin: state.fetchOrigin
+});
+
+List.propTypes = {
+  fetching: PropTypes.func,
+  arrayOrigin: PropTypes.array
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(List);
